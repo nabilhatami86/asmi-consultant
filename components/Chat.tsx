@@ -143,8 +143,8 @@ export default function Chat() {
       </div>
 
       {/* Quick Prompts */}
-      <div className="fixed bottom-20 left-0 right-0 z-10 bg-gradient-to-t from-sand-50 via-sand-50/80 to-transparent pb-2 pt-4">
-        <div className="mx-auto flex max-w-4xl gap-2 overflow-x-auto px-4 no-scrollbar">
+      <div className="fixed bottom-20 left-0 right-0 z-10 bg-gradient-to-t from-sand-50 via-sand-50/80 to-transparent pb-2 pt-4 px-2 sm:px-4">
+        <div className="mx-auto flex max-w-4xl gap-2 overflow-x-auto px-2 sm:px-4 no-scrollbar">
           {QUICK.map((q) => (
             <button
               key={q}
@@ -159,8 +159,8 @@ export default function Chat() {
       </div>
 
       {/* Input Area + PDF Upload */}
-      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-sand-200 bg-sand-50/90 backdrop-blur pb-4 pt-3">
-        <div className="mx-auto max-w-4xl px-4">
+      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-sand-200 bg-sand-50/90 backdrop-blur pb-4 pt-3 px-2 sm:px-4">
+        <div className="mx-auto max-w-4xl px-2 sm:px-4">
           {/* PDF Upload Drawer */}
           <details className="mb-2 group">
             <summary className="cursor-pointer text-xs font-medium text-gold-700 hover:underline flex items-center gap-1.5">
@@ -171,19 +171,19 @@ export default function Chat() {
                 type="file"
                 accept=".pdf"
                 onChange={(e) => setPdfFile(e.target.files?.[0] || null)}
-                className="text-xs text-stone-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sand-100 file:text-stone-700 hover:file:bg-sand-200"
+                className="w-full text-xs text-stone-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sand-100 file:text-stone-700 hover:file:bg-sand-200"
               />
               <input
                 type="text"
                 value={pdfPrompt}
                 onChange={(e) => setPdfPrompt(e.target.value)}
                 placeholder="Instruksi untuk PDF..."
-                className="flex-1 rounded-lg border border-sand-300 px-3 py-1.5 text-xs outline-none focus:border-gold-500"
+                className="w-full flex-1 rounded-lg border border-sand-300 px-3 py-1.5 text-xs outline-none focus:border-gold-500"
               />
               <button
                 type="submit"
                 disabled={!pdfFile || loading}
-                className="rounded-lg bg-gold-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-gold-700 disabled:opacity-50"
+                className="w-full sm:w-auto rounded-lg bg-gold-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-gold-700 disabled:opacity-50"
               >
                 Analisis PDF
               </button>
@@ -207,14 +207,14 @@ export default function Chat() {
                   send();
                 }
               }}
-              placeholder="Tulis konsultasi, tanyakan dupe, atau bandingkan brand (Enter untuk kirim)..."
+              placeholder="Tulis konsultasi, tanyakan dupe, atau bandingkan brand..."
               rows={1}
-              className="max-h-32 flex-1 resize-none border-0 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-stone-400"
+              className="max-h-32 flex-1 resize-none border-0 bg-transparent px-2 sm:px-3 py-2 text-xs sm:text-sm outline-none placeholder:text-stone-400"
             />
             <button
               type="submit"
               disabled={!input.trim() || loading}
-              className="rounded-xl bg-ink px-6 py-2.5 text-sm font-medium text-white shadow transition hover:bg-stone-800 disabled:opacity-50"
+              className="shrink-0 rounded-xl bg-ink px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white shadow transition hover:bg-stone-800 disabled:opacity-50"
             >
               Kirim
             </button>
