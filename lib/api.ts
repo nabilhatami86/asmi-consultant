@@ -1,4 +1,4 @@
-export const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+export const API = (process.env.NEXT_PUBLIC_API_URL || "https://be-asmi-consultant.vercel.app").replace(/\/$/, "");
 
 export type Role = "user" | "assistant";
 export interface ChatMsg { role: Role; content: string }
