@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+body { @apply bg-sand-50 text-ink antialiased; }
+.prose table { @apply text-sm; }
+.prose th, .prose td { @apply px-2 py-1; }
+.prose :where(p, ul, ol):first-child { margin-top: 0; }
+.prose :where(p, ul, ol, table):last-child { margin-bottom: 0; }
