@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Icon } from "@/components/Icon";
 import { API } from "@/lib/api";
+import { Pagination } from "@/components/Pagination";
 
 export default function KatalogMaklonPage() {
   const [rekomendasi, setRekomendasi] = useState<any[]>([]);
@@ -12,15 +13,19 @@ export default function KatalogMaklonPage() {
     "rekomendasi" | "peluang" | "charts"
   >("rekomendasi");
 
+  const [pageRek, setPageRek] = useState(1);
+  const [pagePel, setPagePel] = useState(1);
+  const pageSize = 300;
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const res1 = await fetch(`${API}/katalog-maklon/rekomendasi?limit=30`);
+        const res1 = await fetch(`${API}/katalog-maklon/rekomendasi?limit=300`);
         const data1 = await res1.json();
         if (data1.status === "sukses") setRekomendasi(data1.rekomendasi);
 
         const res2 = await fetch(
-          `${API}/katalog-maklon/peluang-belum?limit=30`,
+          `${API}/katalog-maklon/peluang-belum?limit=300`,
         );
         const data2 = await res2.json();
         if (data2.status === "sukses") setPeluang(data2.peluang);
@@ -32,6 +37,9 @@ export default function KatalogMaklonPage() {
     }
     fetchData();
   }, []);
+
+  const paginatedRek = rekomendasi;
+  const paginatedPel = peluang;
 
   const chartList = [
     {
@@ -119,7 +127,7 @@ export default function KatalogMaklonPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-100 text-stone-700">
-                      {rekomendasi.map((row, idx) => (
+                      {paginatedRek.map((row, idx) => (
                         <tr key={idx} className="hover:bg-stone-50 transition">
                           <td className="p-3.5 font-semibold text-amber-800">
                             {row.kategori || "-"}
@@ -171,7 +179,7 @@ export default function KatalogMaklonPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-stone-100 text-stone-700">
-                      {peluang.map((row, idx) => (
+                      {paginatedPel.map((row, idx) => (
                         <tr key={idx} className="hover:bg-stone-50 transition">
                           <td className="p-3.5 font-bold text-stone-900">
                             {row.original_belum_di_katalog ||

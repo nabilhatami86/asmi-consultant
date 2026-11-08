@@ -1,7 +1,7 @@
-export const API = (
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
-)
-  .replace(/\/$/, "") + "/api";
+export const API =
+  (process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000")
+    .replace(/\/api$/, "")
+    .replace(/\/$/, "") + "/api";
 
 export type Role = "user" | "assistant";
 export interface ChatMsg {
@@ -63,12 +63,12 @@ async function j<T>(res: Response): Promise<T> {
 }
 
 export const getHealth = () =>
-  fetch(`${API}/api/health`).then(
+  fetch(`${API}/health`).then(
     j<{ ok: boolean; mode: "groq" | "demo"; model: string | null }>,
   );
 
 export const postChat = (messages: ChatMsg[]) =>
-  fetch(`${API}/api/chat`, {
+  fetch(`${API}/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages }),
@@ -78,7 +78,7 @@ export const postChatPdf = (file: File, prompt: string) => {
   const form = new FormData();
   form.append("file", file);
   form.append("prompt", prompt);
-  return fetch(`${API}/api/chat/pdf`, {
+  return fetch(`${API}/chat/pdf`, {
     method: "POST",
     body: form,
   }).then(j<{ answer: string; mode: string; extracted_text_len: number }>);
@@ -94,15 +94,15 @@ export const getOriginals = (p: {
   Object.entries(p).forEach(
     ([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)),
   );
-  return fetch(`${API}/api/originals?${qs}`).then(
+  return fetch(`${API}/originals?${qs}`).then(
     j<{ total_cocok: number; hasil: OriginalRow[] }>,
   );
 };
 
 export const getDupes = (original: string) =>
-  fetch(
-    `${API}/api/dupes?original=${encodeURIComponent(original)}&top_n=5`,
-  ).then(j<DupeResult>);
+  fetch(`${API}/dupes?original=${encodeURIComponent(original)}&top_n=5`).then(
+    j<DupeResult>,
+  );
 
 // --- Scouting types ---
 export interface ScoutGap {
@@ -181,7 +181,7 @@ export const getScoutData = (p: {
   Object.entries(p).forEach(
     ([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)),
   );
-  return fetch(`${API}/api/scout?${qs}`).then(j<ScoutData>);
+  return fetch(`${API}/scout?${qs}`).then(j<ScoutData>);
 };
 
 export const postScoutAi = (p: {
@@ -190,7 +190,7 @@ export const postScoutAi = (p: {
   budget_max?: number;
   context?: string;
 }) =>
-  fetch(`${API}/api/scout/ai`, {
+  fetch(`${API}/scout/ai`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(p),
