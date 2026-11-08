@@ -1,9 +1,23 @@
-export const API = (process.env.NEXT_PUBLIC_API_URL || "https://be-asmi-consultant.vercel.app").replace(/\/$/, "");
+export const API = (
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"
+)
+  .replace(/\/$/, "") + "/api";
 
 export type Role = "user" | "assistant";
-export interface ChatMsg { role: Role; content: string }
-export interface ToolUse { name: string; input: Record<string, unknown> }
-export interface ChatOut { answer: string; mode: "groq" | "demo"; tools: ToolUse[]; notice?: string }
+export interface ChatMsg {
+  role: Role;
+  content: string;
+}
+export interface ToolUse {
+  name: string;
+  input: Record<string, unknown>;
+}
+export interface ChatOut {
+  answer: string;
+  mode: "groq" | "demo";
+  tools: ToolUse[];
+  notice?: string;
+}
 
 export interface OriginalRow {
   line_full: string;
@@ -48,7 +62,10 @@ async function j<T>(res: Response): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export const getHealth = () => fetch(`${API}/api/health`).then(j<{ ok: boolean; mode: "groq" | "demo"; model: string | null }>);
+export const getHealth = () =>
+  fetch(`${API}/api/health`).then(
+    j<{ ok: boolean; mode: "groq" | "demo"; model: string | null }>,
+  );
 
 export const postChat = (messages: ChatMsg[]) =>
   fetch(`${API}/api/chat`, {
@@ -67,14 +84,25 @@ export const postChatPdf = (file: File, prompt: string) => {
   }).then(j<{ answer: string; mode: string; extracted_text_len: number }>);
 };
 
-export const getOriginals = (p: { q?: string; kuadran?: string; sort_by?: string; limit?: number }) => {
+export const getOriginals = (p: {
+  q?: string;
+  kuadran?: string;
+  sort_by?: string;
+  limit?: number;
+}) => {
   const qs = new URLSearchParams();
-  Object.entries(p).forEach(([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)));
-  return fetch(`${API}/api/originals?${qs}`).then(j<{ total_cocok: number; hasil: OriginalRow[] }>);
+  Object.entries(p).forEach(
+    ([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)),
+  );
+  return fetch(`${API}/api/originals?${qs}`).then(
+    j<{ total_cocok: number; hasil: OriginalRow[] }>,
+  );
 };
 
 export const getDupes = (original: string) =>
-  fetch(`${API}/api/dupes?original=${encodeURIComponent(original)}&top_n=5`).then(j<DupeResult>);
+  fetch(
+    `${API}/api/dupes?original=${encodeURIComponent(original)}&top_n=5`,
+  ).then(j<DupeResult>);
 
 // --- Scouting types ---
 export interface ScoutGap {
@@ -83,7 +111,14 @@ export interface ScoutGap {
   sold_w: number | null;
   opportunity_score: number | null;
   notes_umum: string | null;
-  contoh_dupe_lokal?: { id_parfume?: string; brand: string; variant: string; price_median: number | null; sold_total: number | null; concentrate: string }[];
+  contoh_dupe_lokal?: {
+    id_parfume?: string;
+    brand: string;
+    variant: string;
+    price_median: number | null;
+    sold_total: number | null;
+    concentrate: string;
+  }[];
 }
 
 export interface ScoutWhiteSpace {
@@ -101,7 +136,13 @@ export interface ScoutWhiteSpace {
 export interface ScoutBlindSpot {
   brand: string;
   total_missing: number;
-  belum_cover: { line_full?: string; original?: string; sold_w: number | null; n_brand_dupe: number; opportunity_score: number | null }[];
+  belum_cover: {
+    line_full?: string;
+    original?: string;
+    sold_w: number | null;
+    n_brand_dupe: number;
+    opportunity_score: number | null;
+  }[];
 }
 
 export interface ScoutRec {
@@ -130,18 +171,32 @@ export interface ScoutAiOut {
   data: ScoutData;
 }
 
-export const getScoutData = (p: { focus?: string; gender?: string; budget_max?: number; limit?: number }) => {
+export const getScoutData = (p: {
+  focus?: string;
+  gender?: string;
+  budget_max?: number;
+  limit?: number;
+}) => {
   const qs = new URLSearchParams();
-  Object.entries(p).forEach(([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)));
+  Object.entries(p).forEach(
+    ([k, v]) => v !== undefined && v !== "" && qs.set(k, String(v)),
+  );
   return fetch(`${API}/api/scout?${qs}`).then(j<ScoutData>);
 };
 
-export const postScoutAi = (p: { focus?: string; gender?: string; budget_max?: number; context?: string }) =>
+export const postScoutAi = (p: {
+  focus?: string;
+  gender?: string;
+  budget_max?: number;
+  context?: string;
+}) =>
   fetch(`${API}/api/scout/ai`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(p),
   }).then(j<ScoutAiOut>);
 
-export const rp = (v: number | null | undefined) => (v == null ? "-" : "Rp " + Math.round(v).toLocaleString("id-ID"));
-export const num = (v: number | null | undefined) => (v == null ? "-" : Math.round(v).toLocaleString("id-ID"));
+export const rp = (v: number | null | undefined) =>
+  v == null ? "-" : "Rp " + Math.round(v).toLocaleString("id-ID");
+export const num = (v: number | null | undefined) =>
+  v == null ? "-" : Math.round(v).toLocaleString("id-ID");
