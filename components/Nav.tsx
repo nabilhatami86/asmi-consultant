@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/", label: "Konsultasi AI" },
   { href: "/dashboard", label: "Dashboard Hub" },
+  { href: "/konsultasi", label: "Konsultasi & Simulasi Modal" },
   { href: "/formula", label: "Formula Lab" },
   { href: "/peluang", label: "Peta Peluang" },
   { href: "/scouting", label: "Scouting" },
