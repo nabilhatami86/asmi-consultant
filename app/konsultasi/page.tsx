@@ -17,8 +17,13 @@ const KATALOG_PARFUM = [
 ];
 
 const DEFAULT_ITEMS: ItemSimulasi[] = [
-  { nama_produk: "Ex Nihilo Blue Talisman", konsentrasi: "EDP", modal_total: "2.5 Jt", jumlah_pcs: "100", harga_jual: "232000" },
-  { nama_produk: "9pm Rebel", konsentrasi: "EDP", modal_total: "2.5 Jt", jumlah_pcs: "100", harga_jual: "232000" }
+  { nama_produk: "Ex Nihilo Blue Talisman", konsentrasi: "EDP", modal_total: "2.5 Jt", jumlah_pcs: "100", harga_jual: "232 Ribu" },
+  { nama_produk: "9pm Rebel", konsentrasi: "EDP", modal_total: "2.5 Jt", jumlah_pcs: "100", harga_jual: "232 Ribu" },
+  { nama_produk: "HMNS Orgsm", konsentrasi: "EDP", modal_total: "2.5 Jt", jumlah_pcs: "100", harga_jual: "153 Ribu" },
+  { nama_produk: "LV Imagination", konsentrasi: "Extrait", modal_total: "3.1 Jt", jumlah_pcs: "100", harga_jual: "169 Ribu" },
+  { nama_produk: "PDM Delina", konsentrasi: "Extrait", modal_total: "3.1 Jt", jumlah_pcs: "100", harga_jual: "169 Ribu" },
+  { nama_produk: "Paco Rabanne 1 Million", konsentrasi: "Extrait", modal_total: "3.1 Jt", jumlah_pcs: "100", harga_jual: "169 Ribu" },
+  { nama_produk: "Creed Silver Mountain", konsentrasi: "Extrait", modal_total: "3.1 Jt", jumlah_pcs: "100", harga_jual: "169 Ribu" }
 ];
 
 const DEFAULT_BIAYA = { botol_box: "4 Jt", bpom_halal: "8 Jt", marketing_ads: "5 Jt", dana_darurat: "3 Jt", packaging_alat: "2.5 Jt" };
